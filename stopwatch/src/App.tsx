@@ -1,8 +1,20 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 function App() {
   const [time, setTime] = useState<number>(0);
   const [running, setRunning] = useState<boolean>(false);
+
+  useEffect(() => {
+    let interval: ReturnType<typeof setInterval>;
+
+    if (running) {
+      interval = setInterval(() => {
+        setTime((prevTime) => prevTime + 10);
+      }, 10);
+    }
+
+    return () => clearInterval(interval);
+  }, [running]);
 
   return (
     <>
